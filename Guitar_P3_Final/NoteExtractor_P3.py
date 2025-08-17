@@ -11,7 +11,7 @@ BUFFER_SIZE = 4096
 HOP_SIZE = 512
 SAMPLE_RATE = 44100
 
-pitchWee = aubio.pitch("yinfft", BUFFER_SIZE, HOP_SIZE, SAMPLE_RATE)
+pitchWee = aubio.pitch("default", BUFFER_SIZE, HOP_SIZE, SAMPLE_RATE)
 pitchWee.set_unit("Hz")
 pitchWee.set_silence(-40)
 pitchWee.set_tolerance(0.8)
@@ -38,8 +38,8 @@ def bandpass_filter(data, lowcut=80.0, highcut=1300.0, fs=44100, order=4):
     b, a = butter_bandpass(lowcut, highcut, fs, order)
     return lfilter(b, a, data)
 
-songName = "Hotel California"
-audioData, sr = librosa.load("C:/Users/maila/Downloads/Eagles - Hotel California (solo cover).mp3", sr=44100, mono=True) #this has to be linked to the mp3 song file
+songName = "Seven Nation Army"
+audioData, sr = librosa.load(f"{songName}.wav", sr=44100, mono=True) #this has to be linked to the mp3 song file
 harmonic, percussive = librosa.effects.hpss(audioData)
 finProcessed = bandpass_filter(harmonic)
 finProcessed = highpass_filter(finProcessed)
